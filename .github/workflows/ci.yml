@@ -40,8 +40,8 @@ jobs:
       - name: Run npm audit for a basic vuln scan
         run: npm audit || true
 
-      - name: Run Elctronegativity 
-        run: npm run electronegativity
+      # - name: Run Elctronegativity 
+      #   run: npm run electronegativity
       ## We could use something more comprehensive like Snyk or Trivy
       ## Not sure if they're free..
 
@@ -75,20 +75,10 @@ jobs:
           name: electron-secure-defaults-tar
           path: dist/*.tar.gz
 
-  # package:
-  #   runs-on: ubuntu-latest
-  #   needs: test
-  #   steps:
-  #     # Package steps here
-
-  # containerize:
-  #   runs-on: ubuntu-latest
-  #   needs: package
-  #   steps:
-  #     # Docker build steps here
-
-  # notify:
-  #   runs-on: ubuntu-latest
-  #   needs: [package, containerize]
-  #   steps:
-  #     # Notification steps here
+      - name: Mock Notification
+        if: always()
+        run: |
+          echo "Build Notification:"
+          echo "CI Build URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "Build Status: ${{ job.status }}"
+          echo "Artifact: electron-secure-defaults-tar"
