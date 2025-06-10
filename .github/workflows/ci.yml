@@ -32,7 +32,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
     # For the sake of the take home we'll force this to always pass
     # But typically these should be resolved where possible or a 
