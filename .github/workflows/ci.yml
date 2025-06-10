@@ -82,29 +82,29 @@ jobs:
           echo "Build Status: ${{ job.status }}"
           echo "Artifact: electron-secure-defaults-tar"
 
-  release-new-dmg:
-  runs-on: macos-latest
-  needs: [build]
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    release-new-dmg:
+    runs-on: macos-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build macOS .dmg
-      run: npx electron-builder --mac dmg
+      - name: Build macOS .dmg
+        run: npx electron-builder --mac dmg
 
-    - name: Upload macOS .dmg artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: electron-secure-defaults-dmg
-        path: dist/*.dmg
+      - name: Upload macOS .dmg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-secure-defaults-dmg
+          path: dist/*.dmg
 
 
   release:
