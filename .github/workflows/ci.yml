@@ -1,5 +1,8 @@
 name: "Electron Builder App CI Pipeline"
 
+### Things we can improve 
+# Cache the npm run builds everywhere so we don't have to waste time 
+
 on:
   workflow_dispatch:
 
@@ -70,6 +73,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Build Electron app
+        run: npm run build
 
       - name: Build macOS .dmg
         run: npx electron-builder --mac dmg
