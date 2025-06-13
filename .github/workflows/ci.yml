@@ -34,7 +34,7 @@ jobs:
         run: npm audit --audit-level=high || true
 
       - name: Run Electronegativity
-        run: npm run electronegativity
+        run: npm run build && npm run electronegativity
 
   build:
     runs-on: ubuntu-latest
@@ -43,16 +43,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Electron app
-        run: npm run build
+      - name: Build Docker image
+        run: docker build -t electron-secure-defaults-builder .
 
       - name: Package Electron app as .tar.gz
         run: npx electron-builder --linux tar.gz
