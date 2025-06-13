@@ -1,7 +1,7 @@
-name: "Electron Builder App CI Pipeline"
+name: 'Electron Builder App CI Pipeline'
 
-### Things we can improve 
-# Cache the npm run builds everywhere so we don't have to waste time 
+### Things we can improve
+# Cache the npm run builds everywhere so we don't have to waste time
 
 on:
   workflow_dispatch:
@@ -31,7 +31,10 @@ jobs:
         run: npm ci
 
       - name: Run npm audit for a basic vuln scan
-        run: npm audit || true
+        run: npm audit --audit-level=high || true
+
+      - name: Run Electronegativity
+        run: npm run electronegativity
 
   build:
     runs-on: ubuntu-latest
@@ -68,7 +71,7 @@ jobs:
           echo "Build Status: ${{ job.status }}"
           echo "Artifact: electron-secure-defaults-tar"
 
-  release-new-dmg:
+  build-new-dmg:
     runs-on: macos-latest
     needs: [build]
     steps:
@@ -99,7 +102,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: [build, release-new-dmg]
+    needs: [build, build-new-dmg]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
