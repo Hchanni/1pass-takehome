@@ -53,6 +53,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t electron-secure-defaults-builder .
 
+      - name: Npm Install
+        run: npm ci
+
+      - name: Build Electron app
+        run: npm run build
+
       - name: Package Electron app as .tar.gz
         run: npx electron-builder --linux tar.gz
 
